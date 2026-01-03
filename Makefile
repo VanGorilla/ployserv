@@ -2,16 +2,16 @@ TARGET = ployserv
 
 CC = gcc
 CFLAGS = -I$(IDIR)
-CFLAGS += -lm # Math lib
+# CFLAGS += -lm # Math lib
 
 ODIR = output
 
 SDIR =./src
-SRC = $(wildcard $(SDIR)/*.c)    
-IDIR =./include  
-DEPS = $(wildcard $(SDIR)/*.h)  
+SRC = $(wildcard $(SDIR)/*.c)
+IDIR =./include
+DEPS = $(wildcard $(SDIR)/*.h)
 
-OBJ = $(patsubst $(SDIR)%.c, $(ODIR)%.o, $(SRC))  
+OBJ = $(patsubst $(SDIR)%.c, $(ODIR)%.o, $(SRC))
 
 # Main target recipe
 $(ODIR)/$(TARGET): $(OBJ)
@@ -27,10 +27,10 @@ $(ODIR)/%.o: $(SDIR)/%.c $(ODIR) $(DEPS)
 
 .PHONY: clean echo
 
-echo:
-	@echo $(OBJ)	
+echo: # Debug
+	@echo $(OBJ)
 
 clean:
-	@echo "Cleaning up"
+	@echo Cleaning up
 	@rm -rf $(ODIR)
 

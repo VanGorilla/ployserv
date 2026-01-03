@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include <math.h>
 
 #include "server.h"
 
 // Main function
 int main() {
+
     int server_fd = setup_server();
-    printf("Chess game server listening on port %d\n", PORT);
+    printf("Ploy game server listening on port %d\n", PORT);
 
     int client_fd;
     struct sockaddr_in address;
@@ -26,8 +26,9 @@ int main() {
         read(client_fd, buffer, BUFFER_SIZE);
         printf("Received from client %d: %s\n", client_fd, buffer);
 
-        send_start_page(client_fd);
-
+        if(send_start_page(client_fd) == 0) {
+            perror("Error sending response");
+        }
         close(client_fd);
     }
 

@@ -6,7 +6,7 @@
 int setup_server() {
     int server_fd;
     struct sockaddr_in address;
-    
+
     // Create socket
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
         perror("Socket failed");
@@ -35,25 +35,28 @@ int setup_server() {
 
 int send_start_page(int client_fd) {
 
+    printf("Sending start page\n");
     FILE* fptr = fopen("startpage.html", "r");
-    
+
     // Error handling
     if(fptr == 0) {
         perror("Error opening startpage.html");
         return 0;
     }
-    
-    // File size
-    fseek(fptr, 0L, SEEK_END); 
-    int len = ftell(fptr);
-    
-    int* buf = malloc(len*sizeof(int));
-    
-    fread(buf, sizeof(int), len, fptr);
 
+    // Read response from file
+    fseek(fptr, 0L, SEEK_END);
+    int len = ftell(fptr);
+    fseek(fptr, 0L, SEEK_SET);
+    char* buf = malloc(len);
+    fread(buf, 1, len, fptr);
     fclose(fptr);
+
+    // Send response
+    send(client_fd, buf, len, 0);
     free(buf);
-    // char response[BUFFER_SIZE];
-  	// send(client_fd, response, strlen(response), 0);
+
+
+
     return len;
 }

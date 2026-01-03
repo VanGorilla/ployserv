@@ -36,7 +36,7 @@ int setup_server() {
 int send_start_page(int client_fd) {
 
     printf("Sending start page\n");
-    FILE* fptr = fopen("startpage.html", "r");
+    FILE* fptr = fopen("resource/startpage.html", "r");
 
     // Error handling
     if(fptr == 0) {
